@@ -6,38 +6,138 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>526</width>
-    <height>489</height>
+    <width>668</width>
+    <height>585</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QCalendarWidget" name="calendarWidget">
+   <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>40</y>
-      <width>264</width>
-      <height>155</height>
+      <x>90</x>
+      <y>91</y>
+      <width>74</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Scada4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Tapi</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>41</x>
+      <y>81</y>
+      <width>44</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>P&amp;roject</string>
+    </property>
+    <property name="buddy">
+     <cstring>comboBox</cstring>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox_2">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>139</y>
+      <width>72</width>
+      <height>21</height>
      </rect>
     </property>
    </widget>
-   <widget class="QDoubleSpinBox" name="doubleSpinBox">
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>270</y>
-      <width>62</width>
-      <height>22</height>
+      <x>41</x>
+      <y>129</y>
+      <width>27</width>
+      <height>16</height>
      </rect>
     </property>
-    <property name="buttonSymbols">
-     <enum>QAbstractSpinBox::PlusMinus</enum>
+    <property name="text">
+     <string>Task</string>
     </property>
-    <property name="singleStep">
-     <double>0.150000000000000</double>
+    <property name="buddy">
+     <cstring>comboBox_2</cstring>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton">
+    <property name="geometry">
+     <rect>
+      <x>171</x>
+      <y>81</y>
+      <width>42</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="qtime.qrc">
+      <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonIconOnly</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_2">
+    <property name="geometry">
+     <rect>
+      <x>171</x>
+      <y>129</y>
+      <width>42</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="qtime.qrc">
+      <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonIconOnly</enum>
     </property>
    </widget>
   </widget>
@@ -46,15 +146,15 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>526</width>
-     <height>20</height>
+     <width>668</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
-    <addaction name="actionExit"/>
+    <addaction name="file_exit"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -66,16 +166,29 @@
     <property name="title">
      <string>&amp;Projects</string>
     </property>
+    <widget class="QMenu" name="menuScada4">
+     <property name="title">
+      <string>Scada4</string>
+     </property>
+     <addaction name="actionAdd_SubTask"/>
+     <addaction name="separator"/>
+     <addaction name="actionServer"/>
+    </widget>
     <addaction name="action_Add_Project"/>
+    <addaction name="separator"/>
+    <addaction name="menuScada4"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menu_Projects"/>
    <addaction name="menu_Help"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionExit">
+  <action name="file_exit">
    <property name="text">
     <string>&amp;Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
   <action name="action_About">
@@ -88,9 +201,36 @@
     <string>&amp;Add Project</string>
    </property>
   </action>
+  <action name="actionAdd_SubTask">
+   <property name="text">
+    <string>Add SubTask</string>
+   </property>
+  </action>
+  <action name="actionServer">
+   <property name="text">
+    <string>Server</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="qtime.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>file_exit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>333</x>
+     <y>292</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
