@@ -1,14 +1,14 @@
-target =  qtime
-deps = ui/qtime.qrc ui/qtime.ui
+target =  qtracker
+deps = ui/qtracker.qrc ui/qtracker.ui
 
 all: $(target)
 
 $(target): $(deps)
-	pyuic4 ui/qtime.ui > ui/qtime.py
-	pyrcc4 ui/qtime.qrc > ui/qtime.py
+	pyuic4 ui/qtracker.ui > ui/qtracker.py
+	pyrcc4 ui/qtracker.qrc > ui/qtracker_rc.py
 
 
 .PHONY: clean
 
 clean:
-	rm -f ui/qtime.py ui/*pyc
+	rm -f ui/qtracker.py ui/qtracker_rc.py ui/*pyc
