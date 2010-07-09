@@ -25,211 +25,101 @@
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QComboBox" name="comboBox">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>91</y>
-      <width>74</width>
-      <height>21</height>
-     </rect>
-    </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <property name="text">
-      <string>Scada4</string>
-     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>P&amp;roject</string>
+        </property>
+        <property name="buddy">
+         <cstring>project_combo</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="project_combo">
+        <item>
+         <property name="text">
+          <string>Scada4</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Tapi</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="addproject_button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="qtracker.qrc">
+          <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>26</width>
+          <height>26</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Task</string>
+        </property>
+        <property name="buddy">
+         <cstring>task_combo</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="task_combo"/>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="addtask_button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="qtracker.qrc">
+          <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>26</width>
+          <height>26</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
-    <item>
-     <property name="text">
-      <string>Tapi</string>
-     </property>
-    </item>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>41</x>
-      <y>81</y>
-      <width>44</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>P&amp;roject</string>
-    </property>
-    <property name="buddy">
-     <cstring>comboBox</cstring>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="comboBox_2">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>139</y>
-      <width>72</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>41</x>
-      <y>129</y>
-      <width>27</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Task</string>
-    </property>
-    <property name="buddy">
-     <cstring>comboBox_2</cstring>
-    </property>
-   </widget>
-   <widget class="QToolButton" name="toolButton">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>250</y>
-      <width>32</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>32</width>
-      <height>32</height>
-     </size>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-image: url(:/icons/add.png);</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset resource="qtracker.qrc">
-      <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>32</width>
-      <height>32</height>
-     </size>
-    </property>
-    <property name="toolButtonStyle">
-     <enum>Qt::ToolButtonIconOnly</enum>
-    </property>
-    <property name="autoRaise">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QToolButton" name="toolButton_2">
-    <property name="geometry">
-     <rect>
-      <x>171</x>
-      <y>129</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset resource="qtracker.qrc">
-      <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>32</width>
-      <height>32</height>
-     </size>
-    </property>
-    <property name="toolButtonStyle">
-     <enum>Qt::ToolButtonIconOnly</enum>
-    </property>
-   </widget>
-   <widget class="QToolButton" name="toolButton_3">
-    <property name="geometry">
-     <rect>
-      <x>470</x>
-      <y>90</y>
-      <width>30</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>...</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>230</y>
-      <width>31</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-margin: 0px 0px;
-     }
-
-     QPushButton:pressed {
-         background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                           stop: 0 #dadbde, stop: 1 #f6f7fa);
-     }
-
-     QPushButton:flat {
-         border: none; /* no border for a flat push button */
-     }
-
-     QPushButton:default {
-         border-color: navy; /* make the default button prominent */
-     }</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset resource="qtracker.qrc">
-      <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>32</width>
-      <height>32</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QToolButton" name="toolButton_4">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>140</y>
-      <width>30</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>...</string>
-    </property>
-   </widget>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
