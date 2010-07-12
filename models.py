@@ -4,7 +4,7 @@ import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 
-from sqlalchemy import Table, Column, Integer, String, DateTime
+from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey
 
 Base = declarative_base()
 
@@ -12,7 +12,7 @@ class Project(Base):
     __tablename__ = 'projects'
     
     id = Column(Integer, primary_key = True)
-    name = Column(String)
+    name = Column(String, unique = True)
     time_spent = Column(Integer)
 
     created = Column(DateTime)
@@ -36,7 +36,8 @@ class Task(Base):
 
     created = Column(DateTime)
     modified = Column(DateTime)
-    project = relationship(Project, backref = backref('tasks', order_by = created))
+    project_id = Column(Integer, ForeignKey('projects.id'))
+    project = relationship(Project, backref = backref('tasks', order_by = name))
     def __init__(self, name, project):
         self.name = name
         self.time_spent = 0
@@ -55,8 +56,12 @@ class Slot(Base):
     end = Column(DateTime)
     created = Column(DateTime)
     modified = Column(DateTime)
-    project = relationship(Project)
-    task = relationship(Task)
+    project_id = Column(Integer, ForeignKey('projects.id'))
+    task_id = Column(Integer, ForeignKey('tasks.id'))
+
+
+    project = relationship(Project, backref = backref('slots', order_by = created))
+    task = relationship(Task, backref = backref('slots', order_by = created))
 
     def __init__(self, project, task = None):
         self.project = project
@@ -66,3 +71,5 @@ class Slot(Base):
         self.start = datetime.datetime.now()
         self.end = None
 
+    def stop(self):
+        self.end = datetime.datetime.now()
