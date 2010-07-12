@@ -19,11 +19,6 @@
   <property name="windowTitle">
    <string>QTracker v 0.1</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QPushButton {
- margin: 0px;
-}</string>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
