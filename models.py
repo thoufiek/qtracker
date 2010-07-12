@@ -36,8 +36,7 @@ class Task(Base):
 
     created = Column(DateTime)
     modified = Column(DateTime)
-    project = relationship(Project)
-
+    project = relationship(Project, backref = backref('tasks', order_by = created))
     def __init__(self, name, project):
         self.name = name
         self.time_spent = 0
@@ -49,6 +48,8 @@ class Task(Base):
         return "<Task %s from project %s :: %d:%02d spent>" % (self.name, self.project.name, self.time_spent/60, self.time_spent%60)
 
 class Slot(Base):
+    __tablename__ = 'slots'
+
     id = Column(Integer, primary_key = True)
     start = Column(DateTime)
     end = Column(DateTime)

@@ -7,7 +7,11 @@ import sqlite3
 from PyQt4 import QtCore, QtGui
 
 from ui import qtracker, project
-from models import Project, Task, Slot
+from sqlalchemy import create_engine, MetaData
+from sqlalchemy.orm import sessionmaker
+from models import Project, Task, Slot, Base
+
+from sqlalchemy.ext.declarative import declarative_base
 
 
 class QTrackerMW(QtGui.QMainWindow):
@@ -23,6 +27,8 @@ class QTrackerMW(QtGui.QMainWindow):
             event.ignore()
 
 class QTracker(QtCore.QObject):
+    db_path = os.path.expanduser('~/.config/qtracker/db.sqlite3')
+
     def __init__(self):
         QtCore.QObject.__init__(self)
         self.mw = QTrackerMW()
@@ -32,18 +38,24 @@ class QTracker(QtCore.QObject):
         self.pw = QtGui.QWidget()
         self.pui = project.Ui_widget()
         self.pui.setupUi(self.pw)
-
-        #self._db = sqlite3.connect(os.path.expanduser('~/.config/qtracker/db.sqlite3'))
+        
+        #print "DB path => %s" % self.db_path
+        self.engine = create_engine('sqlite:///%s' % self.db_path, echo=True)
+        self.session = sessionmaker(bind = self.engine)
+        self.meta = Base.metadata
+        self.meta.create_all(self.engine)
 
         QtCore.QObject.connect(self.ui.addproject_button, QtCore.SIGNAL('clicked()'), self.pw.show)
         QtCore.QObject.connect(self.pui.button_box, QtCore.SIGNAL('accepted()'), self.add_project)
 
 
     def add_project(self):
-        p = Project()
-        p.name = self.pui.newproject_line.text()
-        
+        name = self.pui.newproject_line.text()
+        p = Project(name)
+        #p.name = self.pui.newproject_line.text()
         print "Devo creare il progetto =>", self.pui.newproject_line.text()
+        self.session.add(p)
+
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
