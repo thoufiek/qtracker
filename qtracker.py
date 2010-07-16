@@ -23,6 +23,8 @@ def htime(seconds):
     return "%d:%02d:%02d" % (h, m, s) if h > 0 else "%02d:%02d" % (m, s)
 
 class QTrackerMW(QtGui.QMainWindow):
+    close_signal = QtCore.pyqtSignal()
+
     def closeEvent(self, event):
         reply = QtGui.QMessageBox.question(self,
                                            'Exit',
@@ -30,6 +32,7 @@ class QTrackerMW(QtGui.QMainWindow):
                                            QtGui.QMessageBox.Yes,
                                            QtGui.QMessageBox.No)
         if reply == QtGui.QMessageBox.Yes:
+            self.close_signal.emit()
             event.accept()
         else:
             event.ignore()
@@ -45,6 +48,7 @@ class QTracker(QtCore.QObject):
         self.mw = QTrackerMW()
         self.ui = qtracker.Ui_QTracker()
         self.ui.setupUi(self.mw)
+
         self.pw = QtGui.QWidget()
         self.pui = project.Ui_widget()
         self.pui.setupUi(self.pw)
@@ -52,9 +56,8 @@ class QTracker(QtCore.QObject):
         self.tw = QtGui.QWidget()
         self.tui = task.Ui_widget()
         self.tui.setupUi(self.tw)
-        
         #print "DB path => %s" % self.db_path
-        self.engine = create_engine('sqlite:///%s' % self.db_path, echo=True)
+        self.engine = create_engine('sqlite:///%s' % self.db_path, echo=False)
         self._session = sessionmaker(bind = self.engine)
         self.meta = Base.metadata
         self.meta.create_all(self.engine)
@@ -66,9 +69,50 @@ class QTracker(QtCore.QObject):
         QtCore.QObject.connect(self.ui.project_combo, QtCore.SIGNAL('activated(int)'), self.choose_project)
         QtCore.QObject.connect(self.ui.start_button, QtCore.SIGNAL('clicked()'), self.start_slot)
         QtCore.QObject.connect(self.ui.stop_button, QtCore.SIGNAL('clicked()'), self.stop_slot)
+        QtCore.QObject.connect(self.ui.rebuild, QtCore.SIGNAL('clicked()'), self.build)
+        self.mw.close_signal.connect(self.stop_slot)
         self.build()
+        self.build_tray_menu()
         self.choose_project(self.ui.project_combo.currentIndex())
         self.mw.show()
+
+    def build_tray_menu(self):
+        tr = QtGui.QIcon()
+        tr.addPixmap(QtGui.QPixmap(":/icons/foto.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.tray = QtGui.QSystemTrayIcon(tr, self)
+        self.tray.show()
+        self.traymenu = QtGui.QMenu("QTracker Tray Menu")
+        self.tm_switch = QtGui.QAction(self.mw)
+        self.tm_switch.setText("&Switch to")
+        self.traymenu.addAction(self.tm_switch)
+        #self.about_widget.connect(self.tm_about, QtCore.SIGNAL('triggered()'), QtCore.SLOT('show()'))
+        for i in self.projects:
+            a = QtGui.QAction(self.mw)
+            a.setText(i.name)
+            self.traymenu.addAction(a)
+
+
+        # self.tm_about = QAction(self.mw)
+        # self.tm_about.setText(QApplication.translate("MainWindow", "&About", None, QApplication.UnicodeUTF8))
+        # self.about_widget.connect(self.tm_about, QtCore.SIGNAL('triggered()'), QtCore.SLOT('show()'))
+
+        # self.tm_close = QAction(self.mw)
+        # self.tm_close.setText(QApplication.translate("MainWindow", "&Close", None, QApplication.UnicodeUTF8))
+        # self.mw.connect(self.tm_close, QtCore.SIGNAL('triggered()'), QtCore.SLOT('close()'))
+
+        # self.traymenu.addAction(self.tm_about)
+        # self.traymenu.addAction(self.tm_close)
+        QtCore.QObject.connect(self.tray, QtCore.SIGNAL('activated(QSystemTrayIcon::ActivationReason)'), self.show_main)
+        self.tray.setContextMenu(self.traymenu)
+
+    @QtCore.pyqtSlot(int)
+    def show_main(self, value = -3):
+        if value in [2, 3]:
+            if self.mw.isVisible():
+                self.mw.hide()
+            else:
+                self.mw.show()
+
 
     def current_project_task(self):
         _p = _t = None
@@ -90,6 +134,8 @@ class QTracker(QtCore.QObject):
         self.ui.start_button.setEnabled(False)
 
     def stop_slot(self):
+        if not self.current_slot:
+            return
         self.current_slot.stop()
         time_for_slot = self.current_slot.end - self.current_slot.start
         p = self.current_slot.project
@@ -104,7 +150,7 @@ class QTracker(QtCore.QObject):
         self.ui.stop_button.setEnabled(False)
         self.ui.start_button.setEnabled(True)
         self.current_slot = False
-        self.build()
+        #self.build()
 
 
     def build(self, project = None, task = None):

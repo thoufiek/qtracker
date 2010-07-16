@@ -63,6 +63,28 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>newtask_line</tabstop>
+  <tabstop>button_box</tabstop>
+  <tabstop>project_combo</tabstop>
+ </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>button_box</sender>
+   <signal>rejected()</signal>
+   <receiver>widget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>206</x>
+     <y>108</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>65</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
